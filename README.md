@@ -14,9 +14,9 @@ Group categories:
  - `SelectOneGroup`. Contains any number of _SingleOption_, user allowed to choose only one of them. _SingleOption.required_ doesn't impact on Options in this group
  - `StandartGroup`. Contains any number of _SingleOption_, _SingleOption.required_ responsive for mandatory options.
  
- ##Configuring
+## Configuring
  
- ####Creating `SingleOption`:
+#### Creating `SingleOption`:
  
  ```
  import com.blackmorse.joption.SingleOption
@@ -30,7 +30,7 @@ Group categories:
      .build();
  ```
  
- ####Creating groups
+#### Creating groups
  
 ```
 import com.blackmorse.joption.group.*;
@@ -40,20 +40,20 @@ SelectOneGroup selectOneGroup = new SelectOneGroup("name", Arrays.asList(<option
 GroupSingle groupSingle = new GroupSingle(option);
 ```
 
-####Creating Options
+#### Creating Options
 ```
 import com.blackmorse.joption.Options;
 Options options = new Options();
 options.addGroup(standartGroup, selectOneGroup, groupSingle);
 ```
 
-##Using
-####Parsing arguments in interactive mode
+## Using
+#### Parsing arguments in interactive mode
 ```
 options.read();
 ```
 Interactive mode will be started, allowing your to pass arguments from console
-####Passing command line arguments
+#### Passing command line arguments
 ```
 public static void main(String[] args) {
     Map<String, Object> parameters = options.read(args);
@@ -61,7 +61,7 @@ public static void main(String[] args) {
 ```
 jOption will parse argument just like _`commons cli`_
 
-####Using Map<String, Object>
+#### Using Map<String, Object>
 ```
 Map<String, Object> input = ...;
  Map<String, Object> parameters = options.read(input);
