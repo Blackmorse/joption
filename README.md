@@ -30,7 +30,7 @@ Group categories:
      .build();
  ```
  
-#### Creating groups
+#### Creating _groups_
  
 ```
 import com.blackmorse.joption.group.*;
@@ -40,15 +40,15 @@ SelectOneGroup selectOneGroup = new SelectOneGroup("name", Arrays.asList(<option
 GroupSingle groupSingle = new GroupSingle(option);
 ```
 
-#### Creating Options
+#### Creating `JOptions`
 ```
-import com.blackmorse.joption.Options;
-Options options = new Options();
-options.addGroup(standartGroup, selectOneGroup, groupSingle);
+import com.blackmorse.joption.JOptions;
+JOptions joptions = new JOptions();
+joptions.addGroup(standartGroup, selectOneGroup, groupSingle);
 ```
 
 ## Using
-#### Parsing arguments in interactive mode
+#### Passing arguments with interactive mode
 ```
 options.read();
 ```
@@ -56,7 +56,7 @@ Interactive mode will be started, allowing your to pass arguments from console
 #### Passing command line arguments
 ```
 public static void main(String[] args) {
-    Map<String, Object> parameters = options.read(args);
+    Map<String, Object> parameters = joptions.read(args);
 }
 ```
 jOption will parse argument just like _`commons cli`_
@@ -64,6 +64,6 @@ jOption will parse argument just like _`commons cli`_
 #### Using Map<String, Object>
 ```
 Map<String, Object> input = ...;
- Map<String, Object> parameters = options.read(input);
+ Map<String, Object> parameters = joptions.read(input);
 ```
 Library will check consistency of _input_, check groups, required arguments, pass defaults and return _parameters_.

@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class Options {
+public class JOptions {
     private final org.apache.commons.cli.CommandLineParser parser = new DefaultParser();
     private final List<Group> groups = new ArrayList<>();
 
