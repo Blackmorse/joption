@@ -20,14 +20,25 @@ import java.util.Scanner;
 public class JOptions {
     private final org.apache.commons.cli.CommandLineParser parser = new DefaultParser();
     private final List<Group> groups = new ArrayList<>();
+    private Map<String, Object> resultMap;
 
-
-
-    public void addGroup(Group... group) {
+    public void addGroups(Group... group) {
         groups.addAll(Arrays.asList(group));
     }
 
-    public Map<String, Object> read(Map<String, Object> parametersMap) {
+    public boolean getNoArgValue(String name) {
+        return (boolean) resultMap.get(name);
+    }
+
+    public String getOneArgValue(String name) {
+        return (String) resultMap.get(name);
+    }
+
+    public List<String> getMultiplyArgValues(String name) {
+        return (List<String>) resultMap.get(name);
+    }
+
+    public void parse(Map<String, Object> parametersMap) {
         Map<String, Object> resultMap = new HashMap<>(parametersMap);
         groups.forEach(group -> group.getSingleOptions().forEach(singleOption -> {
             if (parametersMap.get(singleOption.getLongName()) == null && singleOption.getDefaultValue() != null) {
@@ -35,7 +46,7 @@ public class JOptions {
             }
         }));
         groups.forEach(group -> group.checkGroup(resultMap));
-        return resultMap;
+        this.resultMap = resultMap;
     }
 
     public void printHelp() {
@@ -45,17 +56,17 @@ public class JOptions {
         new HelpFormatter().printHelp("ant", options);
     }
 
-    public Map<String, Object> read() {
+    public void parse() {
         Map<String, Object> result = new HashMap<>();
         try (Scanner scanner = new Scanner(System.in)) {
             for (Group group : groups) {
                 group.readData(scanner, result);
             }
         }
-        return result;
+        this.resultMap = result;
     }
 
-    public Map<String, Object> read(String[] args) throws ParseException {
+    public void parse(String[] args) throws ParseException {
         org.apache.commons.cli.Options cliOptions = new org.apache.commons.cli.Options();
         List<SingleOption> singleOptions = new ArrayList<>();
         groups.forEach(group -> group.getCliOptions().forEach(cliOptions::addOption));
@@ -65,7 +76,7 @@ public class JOptions {
         Map<String, Object> result = convertToMap(singleOptions, Arrays.asList(cmd.getOptions()));
 
         groups.forEach(group -> group.checkGroup(result));
-        return result;
+        this.resultMap =  result;
     }
 
     private Map<String, Object> convertToMap(List<SingleOption> commandLineOptions, List<Option> cmdOptions) {

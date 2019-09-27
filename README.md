@@ -29,7 +29,7 @@ Group categories:
          .description("For cases when you need to decrease sample or modulo for aggregating script. By default we use 1/shards_count ")
      .build();
  ```
- 
+ There are 3 types of argsNum: _ONE_ARG_, _NO_ARG_, _MULTIPLY_ARGS_
 #### Creating _groups_
  
 ```
@@ -44,19 +44,19 @@ GroupSingle groupSingle = new GroupSingle(option);
 ```
 import com.blackmorse.joption.JOptions;
 JOptions joptions = new JOptions();
-joptions.addGroup(standartGroup, selectOneGroup, groupSingle);
+joptions.addGroups(standartGroup, selectOneGroup, groupSingle);
 ```
 
 ## Using
 #### Passing arguments with interactive mode
 ```
-options.read();
+options.parse();
 ```
 Interactive mode will be started, allowing your to pass arguments from console
 #### Passing command line arguments
 ```
 public static void main(String[] args) {
-    Map<String, Object> parameters = joptions.read(args);
+    joptions.parse(args);
 }
 ```
 jOption will parse argument just like _`commons cli`_
@@ -64,6 +64,14 @@ jOption will parse argument just like _`commons cli`_
 #### Using Map<String, Object>
 ```
 Map<String, Object> input = ...;
- Map<String, Object> parameters = joptions.read(input);
+joptions.parse(input);
 ```
 Library will check consistency of _input_, check groups, required arguments, pass defaults and return _parameters_.
+
+## Get parsed arguments
+```
+boolean b = joptions.getNoArgValue(..);
+String value = joptions.getOneArgValue(..);
+List<String> list = joptions.getMultiplyArgValues(..);
+``` 
+Use this methods(method correponds to `SingleOption.ARG_NUM` type of provided `SingleOption`) for fetching parsed arguments
